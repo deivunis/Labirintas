@@ -43,6 +43,34 @@ int main()
 		case 2:
 			//þaidimo pradëjimas
 			z.Spausdinti();
+			while (x.ar_laimejo == false)
+			{
+				cin >> x.judeti;
+				if (x.judeti == 'W')
+				{
+					x.virsu(x.posx, x.posy);
+					z.Spausdinti();
+				}
+				if (x.judeti == 'S')
+				{
+					x.apacia(x.posx, x.posy);
+					z.Spausdinti();
+				}
+				if (x.judeti == 'A')
+				{
+					x.kaire(x.posx, x.posy);
+					z.Spausdinti();
+				}
+				if (x.judeti == 'D')
+				{
+					x.desine(x.posx, x.posy);
+					z.Spausdinti();
+				}
+			}
+
+
+
+
 			break;
 		case 3:
 			cout << "Zaidëjo informacija: " << endl;
