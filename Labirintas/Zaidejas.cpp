@@ -1,8 +1,9 @@
+#include "Labirintas.h"
 #include "Zaidejas.h"
 #include "Zemelapiai.h"
 
 using namespace std;
-Zemelapis zemelapis;
+
 void Zaidejas::Vardas()
 {
 	cin >> slapyvardis;
@@ -17,54 +18,52 @@ int Zaidejas::get_Gyvybes()
 {
 	return gyvybes;
 }
-
-void Zaidejas::virsu(int& x, int& y)
+void Zaidejas::virsu(int& posx, int& posy)
 {
-    char v_laikinas[100][100];
-    if (zemelapis.lengvas_lygis[x][y - 1] == ' ') 
+    if (lengvas_lygis[posx - 1][posy] == ' ')
     {
-        zemelapis.lengvas_lygis[x][y - 1] = zemelapis.lengvas_lygis[x][y];
-        zemelapis.lengvas_lygis[x][y] = { 'X' };
-
+        pposx = posx;
+        pposy = posy;
+        posx--;
     }
     else
     {
         cout << "Atsitrenkei i siena!" << endl;
     }
 }
-void Zaidejas::apacia(int& x, int& y)
+void Zaidejas::apacia(int& posx, int& posy)
 {
-    char a_laikinas[100][100];
-    if (zemelapis.lengvas_lygis[x][y + 1] == ' ')
+    if (lengvas_lygis[posx + 1][posy] == ' ')
     {
-        zemelapis.lengvas_lygis[x][y + 1] = zemelapis.lengvas_lygis[x][y];
-        zemelapis.lengvas_lygis[x][y] = { 'X' };
+        pposx = posx;
+        pposy = posy;
+        posx++;
     }
     else
     {
         cout << "Atsitrenkei i siena!" << endl;
     }
 }
-void Zaidejas::kaire(int& x, int& y)
+void Zaidejas::kaire(int& posx, int& posy)
 {
-    char k_laikinas[100][100];
-    if (zemelapis.lengvas_lygis[x - 1][y] == ' ')
+    if (lengvas_lygis[posx][posy - 1] == ' ')
     {
-        zemelapis.lengvas_lygis[x - 1][y] = zemelapis.lengvas_lygis[x][y];
-        zemelapis.lengvas_lygis[x][y] = { 'X' };
+        pposx = posx;
+        pposy = posy;
+        posy--;
     }
     else
     {
         cout << "Atsitrenkei i siena!" << endl;
     }
 }
-void Zaidejas::desine(int& x, int& y)
+void Zaidejas::desine(int& posx, int& posy)
 {
-    char d_laikinas[100][100];
-    if (zemelapis.lengvas_lygis[x + 1][y] == ' ')
+    if (lengvas_lygis[posx][posy + 1] == ' ')
     {
-        zemelapis.lengvas_lygis[x + 1][y] = zemelapis.lengvas_lygis[x][y];
-        zemelapis.lengvas_lygis[x][y] = { 'X' };
+        pposx = posx;
+        pposy = posy;
+        posy++;
     }
     else
     {

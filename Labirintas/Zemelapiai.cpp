@@ -1,16 +1,21 @@
 #include <iostream>
 #include "Zemelapiai.h"
+#include "Zaidejas.h"
+#include <Windows.h>
 
 using namespace std;
 
-void Zemelapis::Spausdinti()
+void Zemelapis::Spausdinti(int& posx, int& posy, int& pposx, int& pposy)
 {
-    for (int y = 0; y < 10; y++)
+    lengvas_lygis[pposx][pposy] = tarpas;
+    lengvas_lygis[posx][posy] = zaidejas;
+    lengvas_lygis[outx][outy] = isejimas;
+    for (int i = 0; i < 10; i++)
     {
         cout << endl;
-        for (int x = 0; x < 20; x++)
+        for (int j = 0; j < 20; j++)
         {
-            cout << lengvas_lygis[y][x];
+            cout << lengvas_lygis[i][j];
         }
     }
 }

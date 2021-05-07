@@ -42,35 +42,42 @@ int main()
 			break;
 		case 2:
 			//þaidimo pradëjimas
-			z.Spausdinti();
 			while (x.ar_laimejo == false)
 			{
+				z.Spausdinti(x.posx, x.posy, x.pposx, x.pposy);
 				cin >> x.judeti;
 				if (x.judeti == 'W')
 				{
+					system("cls");
 					x.virsu(x.posx, x.posy);
-					z.Spausdinti();
 				}
 				if (x.judeti == 'S')
 				{
+					system("cls");
 					x.apacia(x.posx, x.posy);
-					z.Spausdinti();
 				}
 				if (x.judeti == 'A')
 				{
+					system("cls");
 					x.kaire(x.posx, x.posy);
-					z.Spausdinti();
 				}
 				if (x.judeti == 'D')
 				{
+					system("cls");
 					x.desine(x.posx, x.posy);
-					z.Spausdinti();
+				}
+				if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D')
+				{
+					system("cls");
+					cout << "Bloga ivedimo komanda! (Didziosios WASD raides)" << endl;
+				}
+				if (x.posx == 4 && x.posy == 19)
+				{
+					x.ar_laimejo = true;
+					system("cls");
+					cout << "Sveikiname, perejote labirinta!" << endl;
 				}
 			}
-
-
-
-
 			break;
 		case 3:
 			cout << "Zaidëjo informacija: " << endl;

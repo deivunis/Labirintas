@@ -32,5 +32,8 @@
     <ClInclude Include="Zemelapiai.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Labirintas.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
