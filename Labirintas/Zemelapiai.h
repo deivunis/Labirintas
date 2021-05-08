@@ -4,8 +4,8 @@
 class Zemelapis : public Labirintas
 {
 public:
-    char vidutinis_lygis[20][30];
-    char sunkus_lygis[30][40];
+    char sunkus_lygis[40][40];
 public:
-    void Spausdinti(int& posx, int& posy, int& pposx, int& pposy);
+    void lengvas_Spausdinti(int& posx, int& posy, int& pposx, int& pposy);
+    void vidutinis_Spausdinti(int& posx2, int& posy2, int& pposx2, int& pposy2);
 };

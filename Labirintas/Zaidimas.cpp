@@ -10,8 +10,12 @@ using namespace std;
 
 int main()
 {
-	int pasirinkimas;
-	char taipne;
+	int meniu_pasirinkimas;
+	char pabaigos_pasirinkimas;
+	char lygio_pasirinkimas = 'N';
+
+	Zaidejas* pZaidejas = new Zaidejas();
+	Zemelapis* pZemalapis = new Zemelapis();
 
 	Zaidejas x;
 	Zemelapis z;
@@ -29,53 +33,114 @@ int main()
 		cout << "	3 - Zaidejo informacija." << endl;
 		cout << "	4 - Palikti zaidima.\n" << endl;
 
-		cin >> pasirinkimas;
+		cin >> meniu_pasirinkimas;
 		system("cls");
 
-		switch (pasirinkimas)
+		switch (meniu_pasirinkimas)
 		{
 		case 1:
 			cout << "Zaidimo informacija: " << endl;
 			cout << "	Zaidimo tikslas - kovoti arba isvengti priesu ir saugiai pereiti labirinta." << endl;
-			cout << "	Zaidimo valdymas - W A S D mygtukai.\n" << endl;
+			cout << "	Zaidimo valdymas - W A S D mygtukai." << endl;
+			cout << "	Norint iseiti spauskite - Q\n" << endl;
 			//papildyti
 			break;
 		case 2:
 			//þaidimo pradëjimas
-			while (x.ar_laimejo == false)
+			if (x.levelis == 1)
 			{
-				z.Spausdinti(x.posx, x.posy, x.pposx, x.pposy);
-				cin >> x.judeti;
-				if (x.judeti == 'W')
+				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
-					system("cls");
-					x.virsu(x.posx, x.posy);
+					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy);
+					cin >> x.judeti;
+					if (x.judeti == 'W')
+					{
+						system("cls");
+						x.virsu(x.posx, x.posy);
+					}
+					if (x.judeti == 'S')
+					{
+						system("cls");
+						x.apacia(x.posx, x.posy);
+					}
+					if (x.judeti == 'A')
+					{
+						system("cls");
+						x.kaire(x.posx, x.posy);
+					}
+					if (x.judeti == 'D')
+					{
+						system("cls");
+						x.desine(x.posx, x.posy);
+					}
+					if (x.judeti == 'Q')
+					{
+						system("cls");
+						x.ar_iseiti = true;
+						cout << "Baigete zaidima!" << endl;
+					}
+					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q')
+					{
+						system("cls");
+						cout << "Bloga ivedimo komanda! (Judeti - didziosios WASD raides. Baigti zaisti - Q)" << endl;
+					}
+					if (x.posx == 4 && x.posy == 19)
+					{
+						x.ar_laimejo = true;
+						x.levelis = 2;
+						system("cls");
+						cout << "Sveikiname, perejote labirinta!" << endl;
+						cout << "Ar norite pradeti 2 lygi? T/N" << endl;
+						cin >> lygio_pasirinkimas;
+						system("cls");
+					}
 				}
-				if (x.judeti == 'S')
+			}
+			if (lygio_pasirinkimas == 'T' && x.levelis == 2)
+			{
+				x.ar_laimejo = false;
+				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
-					system("cls");
-					x.apacia(x.posx, x.posy);
-				}
-				if (x.judeti == 'A')
-				{
-					system("cls");
-					x.kaire(x.posx, x.posy);
-				}
-				if (x.judeti == 'D')
-				{
-					system("cls");
-					x.desine(x.posx, x.posy);
-				}
-				if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D')
-				{
-					system("cls");
-					cout << "Bloga ivedimo komanda! (Didziosios WASD raides)" << endl;
-				}
-				if (x.posx == 4 && x.posy == 19)
-				{
-					x.ar_laimejo = true;
-					system("cls");
-					cout << "Sveikiname, perejote labirinta!" << endl;
+					z.vidutinis_Spausdinti(x.posx2, x.posy2, x.pposx2, x.pposy2);
+					cin >> x.judeti;
+					if (x.judeti == 'W')
+					{
+						system("cls");
+						x.virsu(x.posx2, x.posy2);
+					}
+					if (x.judeti == 'S')
+					{
+						system("cls");
+						x.apacia(x.posx2, x.posy2);
+					}
+					if (x.judeti == 'A')
+					{
+						system("cls");
+						x.kaire(x.posx2, x.posy2);
+					}
+					if (x.judeti == 'D')
+					{
+						system("cls");
+						x.desine(x.posx2, x.posy2);
+					}
+					if (x.judeti == 'Q')
+					{
+						system("cls");
+						x.ar_iseiti = true;
+						cout << "Baigete zaidima!" << endl;
+					}
+					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q')
+					{
+						system("cls");
+						cout << "Bloga ivedimo komanda! (Judeti - didziosios WASD raides. Baigti zaisti - Q)" << endl;
+					}
+					if (x.posx2 == 29 && x.posy2 == 30)
+					{
+						x.ar_laimejo = true;
+						x.levelis = 3;
+						system("cls");
+						cout << "Sveikiname, perejote labirinta!" << endl;
+					}
 				}
 			}
 			break;
@@ -85,11 +150,11 @@ int main()
 			break;
 		case 4:
 			cout << x.get_Vardas() << " Ar tikrai norite palikti zaidima? T/N" << endl;
-			cin >> taipne;
-			if (taipne == 'T')
+			cin >> pabaigos_pasirinkimas;
+			if (pabaigos_pasirinkimas == 'T')
 			{
 				cout << "Iki pasimatymo " << x.get_Vardas() << "!" << endl;
-				pasirinkimas = 5;
+				meniu_pasirinkimas = 5;
 			}
 			else
 			{
@@ -101,7 +166,7 @@ int main()
 			break;*/
 		}
 
-	} while (pasirinkimas != 5);
+	} while (meniu_pasirinkimas != 5);
 
 	return 0;
 }

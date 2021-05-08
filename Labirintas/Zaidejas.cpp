@@ -20,53 +20,93 @@ int Zaidejas::get_Gyvybes()
 }
 void Zaidejas::virsu(int& posx, int& posy)
 {
-    if (lengvas_lygis[posx - 1][posy] == ' ')
+    if (levelis == 1)
     {
-        pposx = posx;
-        pposy = posy;
-        posx--;
+        if (lengvas_lygis[posx - 1][posy] == ' ')
+        {
+            pposx = posx;
+            pposy = posy;
+            posx--;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
-    else
+    if (levelis == 2)
     {
-        cout << "Atsitrenkei i siena!" << endl;
+        if (vidutinis_lygis[posx - 1][posy] == ' ')
+        {
+            pposx2 = posx;
+            pposy2 = posy;
+            posx--;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
 }
 void Zaidejas::apacia(int& posx, int& posy)
 {
-    if (lengvas_lygis[posx + 1][posy] == ' ')
+    if (levelis == 1)
     {
-        pposx = posx;
-        pposy = posy;
-        posx++;
+        if (lengvas_lygis[posx + 1][posy] == ' ')
+        {
+            pposx = posx;
+            pposy = posy;
+            posx++;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
-    else
+    if (levelis == 2)
     {
-        cout << "Atsitrenkei i siena!" << endl;
+        if (vidutinis_lygis[posx + 1][posy] == ' ')
+        {
+            pposx2 = posx;
+            pposy2 = posy;
+            posx++;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
 }
 void Zaidejas::kaire(int& posx, int& posy)
 {
-    if (lengvas_lygis[posx][posy - 1] == ' ')
+    if (levelis == 1)
     {
-        pposx = posx;
-        pposy = posy;
-        posy--;
+        if (lengvas_lygis[posx][posy - 1] == ' ')
+        {
+            pposx = posx;
+            pposy = posy;
+            posy--;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
-    else
+    if (levelis == 2)
     {
-        cout << "Atsitrenkei i siena!" << endl;
+        if (vidutinis_lygis[posx][posy - 1] == ' ')
+        {
+            pposx2 = posx;
+            pposy2 = posy;
+            posy--;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
 }
 void Zaidejas::desine(int& posx, int& posy)
 {
-    if (lengvas_lygis[posx][posy + 1] == ' ')
+    if (levelis == 1)
     {
-        pposx = posx;
-        pposy = posy;
-        posy++;
+        if (lengvas_lygis[posx][posy + 1] == ' ')
+        {
+            pposx = posx;
+            pposy = posy;
+            posy++;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
-    else
+    if (levelis == 2)
     {
-        cout << "Atsitrenkei i siena!" << endl;
+        if (vidutinis_lygis[posx][posy + 1] == ' ')
+        {
+            pposx2 = posx;
+            pposy2 = posy;
+            posy++;
+        }
+        else cout << "Atsitrenkei i siena!" << endl;
     }
 }
