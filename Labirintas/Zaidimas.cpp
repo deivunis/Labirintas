@@ -5,6 +5,7 @@
 #include <vector>
 #include "Zaidejas.h"
 #include "Zemelapiai.h"
+#include "Priesai.h"
 
 using namespace std;
 
@@ -51,7 +52,12 @@ int main()
 			{
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
-					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy);
+					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy, x.ar_nukove);
+					x.Kova(x.ar_nukove);
+					if(x.gyvybes <= 0) x.ar_iseiti = true;
+
+					cout << "Zaidejo gyvybes " << x.get_Gyvybes() << endl;
+					cout << "Zaidejo pinigai " << x.get_Pinigai() << endl;
 					cin >> x.judeti;
 					if (x.judeti == 'W')
 					{

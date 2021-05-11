@@ -24,6 +24,9 @@
     <ClCompile Include="Zemelapiai.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Priesai.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Zaidejas.h">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Labirintas.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Priesai.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

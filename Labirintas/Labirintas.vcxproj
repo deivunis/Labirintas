@@ -139,12 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Priesai.cpp" />
     <ClCompile Include="Zaidejas.cpp" />
     <ClCompile Include="Zaidimas.cpp" />
     <ClCompile Include="Zemelapiai.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Labirintas.h" />
+    <ClInclude Include="Priesai.h" />
     <ClInclude Include="Zaidejas.h" />
     <ClInclude Include="Zemelapiai.h" />
   </ItemGroup>

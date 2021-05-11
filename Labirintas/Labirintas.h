@@ -9,21 +9,44 @@ class Labirintas
 
 public:
 	string slapyvardis;
-	int gyvybes = 100;
-	int width, height;
-	int posx = 1, posx2 = 1;
-	int posy = 1, posy2 = 1;
-	int pposx = 1, pposx2 = 1;
-	int pposy = 1, pposy2 = 1;
-	int outx = 4, outx2 = 29;
-	int outy = 19, outy2 = 30;
-	int levelis = 1;
-	char tarpas = (32);
+	int posx, posx2;
+	int posy, posy2;
+	int pposx, pposx2;
+	int pposy, pposy2;
+	int outx, outx2;
+	int outy, outy2;
+	int levelis;
+	char tarpas;
 	char judeti;
-	char zaidejas = { 2 };
-	char isejimas = { 26 };
-	bool ar_laimejo = false;
-	bool ar_iseiti = false;
+	char zaidejas;
+	char isejimas;
+	bool ar_laimejo;
+	bool ar_iseiti;
+	/*int mx, my;
+	char monstras;*/
+
+public:
+	Labirintas()
+	{
+		posx = 1, posx2 = 1;
+		posy = 1, posy2 = 1;
+		pposx = 1, pposx2 = 1;
+		pposy = 1, pposy2 = 1;
+		outx = 4, outx2 = 29;
+		outy = 19, outy2 = 30;
+		levelis = 1;
+		tarpas = (32);
+		judeti = {};
+		zaidejas = { 2 };
+		isejimas = { 26 };
+		ar_laimejo = false;
+		ar_iseiti = false;
+		/*mx = 7;
+		my = 1;
+		monstras = { 4 };*/
+	}
+	~Labirintas() {};
+
 
 public: //zemelapis
 	char lengvas_lygis[10][20] = {
