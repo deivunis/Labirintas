@@ -10,6 +10,8 @@ Priesas* pG2 = new Goblinas();
 Goblinas* pGD2 = dynamic_cast<Goblinas*>(pG2);
 Priesas* pV2 = new Vilkolakis();
 Vilkolakis* pVD2 = dynamic_cast<Vilkolakis*>(pV2);
+Priesas* pS2 = new Skeletonas();
+Skeletonas* pSD2 = dynamic_cast<Skeletonas*>(pS2);
 Items i2;
 
 void Zaidejas::Vardas()
@@ -132,12 +134,17 @@ void Zaidejas::desine(int& posx, int& posy)
 void Zaidejas::Kova(bool& ar_nukove)
 {
     //pG2->Monstras();
-    if (pG2->gx == posx && pG2->gy == posy && gyvybes > pGD2->Damage())
+    if (pG2->gx == posx && pG2->gy == posy && gyvybes > pGD2->Damage() && energija > pGD2->Exhaustion())
     {
         gyvybes = gyvybes - pGD2->Damage();
+        energija = energija - pGD2->Exhaustion();
         pinigai = pinigai + pGD2->goblino_Pinigai();
         cout << "Uzklupai goblina ir nugalejai!" << endl;
-        cout << "Kovodamas praradai " << pGD2->Damage() << " gyvybiu, taciau radai 18 monetu pas goblina!" << endl;
+        cout << "Kovodamas praradai:\n"
+             << pGD2->Damage() << " gyvybiu\n"
+             << pGD2->Exhaustion() << " energijos.\nTaciau radai "
+             << pGD2->goblino_Pinigai() << " monetu pas goblina!" << endl;
+        
         pG2->gx = 0;
         pG2->gy = 0;
         ar_nukove = true;
@@ -148,12 +155,24 @@ void Zaidejas::Kova(bool& ar_nukove)
         cout << "Uzklupai goblina, taciau jis tave iveike!" << endl;
         ar_nukove = false;
     }
+    else if (pG2->gx == posx && pG2->gy == posy && energija <= pGD2->Exhaustion())
+    {
+        energija = 0;
+        cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+        Sleep(30000);
+        energija = 30;
+        cout << "Pailsejai" << endl;
+        ar_nukove = false;
+    }
     if (pV2->vx == posx && pV2->vy == posy && gyvybes > pVD2->Damage())
     {
         gyvybes = gyvybes - pVD2->Damage();
+        energija = energija - pVD2->Exhaustion();
         cout << "Uzklupai vilkolaki ir nugalejai! " << endl;
-        cout << "Kovodamas praradai " << pVD2->Damage() 
-             << " gyvybiu, taciau vilkolakis turejo eleksyra, kuris atstate 10 tavo gyvybiu!" << endl;
+        cout << "Kovodamas praradai:\n"
+            << pVD2->Damage() << " gyvybiu\n"
+            << pVD2->Exhaustion() << " energijos.\nTaciau radai gyvybiu eleksyra, kuris atstate "
+            << pVD2->vilkolakio_Eleksyras() << " tavo gyvybiu!" << endl;
         gyvybes = gyvybes + pVD2->vilkolakio_Eleksyras();
         pV2->vx = 0;
         pV2->vy = 0;
@@ -163,6 +182,44 @@ void Zaidejas::Kova(bool& ar_nukove)
     {
         gyvybes = 0;
         cout << "Uzklupai vilkolaki, taciau jis tave iveike!" << endl;
+        ar_nukove = false;
+    }
+    else if (pV2->vx == posx && pV2->vy == posy && energija <= pVD2->Exhaustion())
+    {
+        energija = 0;
+        cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+        Sleep(30000);
+        energija = 30;
+        cout << "Pailsejai" << endl;
+        ar_nukove = false;
+    }
+    if (pS2->sx == posx && pS2->sy == posy && gyvybes > pSD2->Damage())
+    {
+        gyvybes = gyvybes - pSD2->Damage();
+        energija = energija - pSD2->Exhaustion();
+        cout << "Uzklupai skeletona ir nugalejai! " << endl;
+        cout << "Kovodamas praradai:\n"
+            << pSD2->Damage() << " gyvybiu\n"
+            << pSD2->Exhaustion() << " energijos.\nTaciau radai energijos eleksyra, kuris atstate "
+            << pSD2->skeletono_Eleksyras() << " tavo energijos!" << endl;
+        energija = energija + pSD2->skeletono_Eleksyras();
+        pS2->sx = 0;
+        pS2->sy = 0;
+        ar_nukove = true;
+    }
+    else if (pS2->sx == posx && pS2->sy == posy && gyvybes <= pSD2->Damage())
+    {
+        gyvybes = 0;
+        cout << "Uzklupai skeletona, taciau jis tave iveike!" << endl;
+        ar_nukove = false;
+    }
+    else if (pS2->sx == posx && pS2->sy == posy && energija <= pSD2->Exhaustion())
+    {
+        energija = 0;
+        cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+        Sleep(30000);
+        energija = 30;
+        cout << "Pailsejai" << endl;
         ar_nukove = false;
     }
 }
@@ -195,6 +252,10 @@ void Zaidejas::Rasti(bool& ar_rado)
 
 }
 
+int Zaidejas::get_Energija()
+{
+    return energija;
+}
 int Zaidejas::get_Gyvybes()
 {
     return gyvybes;

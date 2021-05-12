@@ -13,6 +13,7 @@ public:
 	
 public:
 	int gyvybes;
+	int energija;
 	int dmg;
 	int pinigai;
 	bool ar_nukove;
@@ -21,6 +22,7 @@ public:
 	Zaidejas()
 	{
 		gyvybes = 100;
+		energija = 100;
 		dmg = 0;
 		pinigai = 0;
 		ar_nukove = false;
@@ -31,6 +33,7 @@ public:
 	void Vardas();
 	string get_Vardas();
 	int get_Gyvybes();
+	int get_Energija();
 	int get_Pinigai();
 	void virsu(int& posx, int& posy);
 	void apacia(int& posx, int& posy);

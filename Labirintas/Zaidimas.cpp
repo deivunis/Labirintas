@@ -56,7 +56,7 @@ int main()
 			cout << "	->Zaidimo tikslas - kovoti arba isvengti priesu ir saugiai pereiti labirinta." << endl;
 			cout << "	->Zaidimo valdymas:\n"
 				 << "	   Judeti - W A S D mygtukai.\n	   Inventorius - I\n	   Baigti zaisti - Q" << endl;
-			cout << "	->Norint iseiti spauskite - Q\n" << endl;
+			cout << endl;
 			//papildyti
 			break;
 		case 2:
@@ -72,6 +72,8 @@ int main()
 
 					cout << "Zaidejo gyvybes " << x.get_Gyvybes() << endl;
 					cout << "Zaidejo pinigai " << x.get_Pinigai() << endl;
+					cout << "Zaidejo energija " << x.get_Energija() << endl;
+
 					cin >> x.judeti;
 					if (x.judeti == 'W')
 					{
@@ -123,6 +125,8 @@ int main()
 					if (x.posx == 4 && x.posy == 19)
 					{
 						x.ar_laimejo = true;
+						x.ar_nukove = false;
+						x.ar_rado = false;
 						x.levelis = 2;
 						system("cls");
 						cout << "Sveikiname, perejote labirinta!" << endl;
@@ -137,7 +141,15 @@ int main()
 				x.ar_laimejo = false;
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
-					z.vidutinis_Spausdinti(x.posx2, x.posy2, x.pposx2, x.pposy2);
+					z.vidutinis_Spausdinti(x.posx2, x.posy2, x.pposx2, x.pposy2, x.ar_nukove, x.ar_rado);
+					x.Kova(x.ar_nukove);
+					x.Rasti(x.ar_rado);
+					if (x.gyvybes <= 0) x.ar_iseiti = true;
+
+					cout << "Zaidejo gyvybes " << x.get_Gyvybes() << endl;
+					cout << "Zaidejo pinigai " << x.get_Pinigai() << endl;
+					cout << "Zaidejo energija " << x.get_Energija() << endl;
+
 					cin >> x.judeti;
 					if (x.judeti == 'W')
 					{
@@ -165,10 +177,26 @@ int main()
 						x.ar_iseiti = true;
 						cout << "Baigete zaidima!" << endl;
 					}
-					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q')
+					if (x.judeti == 'I')
 					{
 						system("cls");
-						cout << "Bloga ivedimo komanda! (Judeti - didziosios WASD raides. Baigti zaisti - Q)" << endl;
+						sort(x.kuprine.begin(), x.kuprine.end(), [](inventorius a, inventorius b)
+							{
+								return a.kiekis > b.kiekis;
+							});
+						cout << "Zaidejo inventorius: " << endl;
+						for (int i = 0; i < x.kuprine.size(); i++)
+						{
+							cout << "	" << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+						}
+						cout << endl;
+
+					}
+					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q' && x.judeti != 'I')
+					{
+						system("cls");
+						cout << "Bloga ivedimo komanda!\n"
+							<< "Judeti - didziosios WASD raides.\nInventorius - I\nBaigti zaisti - Q" << endl;
 					}
 					if (x.posx2 == 29 && x.posy2 == 30)
 					{
