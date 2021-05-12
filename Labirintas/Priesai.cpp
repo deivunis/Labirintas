@@ -10,15 +10,19 @@ using namespace std;
 }*/
 int Goblinas::Damage()
 {
-	return 30;
+	srand((unsigned)time(0));
+	int dmg = 1 + (rand() % 30);
+	return dmg;
 }
 int Goblinas::goblino_Pinigai()
 {
-	return 8;
+	return 18;
 }
 int Vilkolakis::Damage()
 {
-	return 40;
+	srand((unsigned)time(0));
+	int dmg = 1 + (rand() % 50);
+	return dmg;
 }
 int Vilkolakis::vilkolakio_Eleksyras()
 {

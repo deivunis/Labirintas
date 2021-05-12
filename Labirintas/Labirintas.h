@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <algorithm>
+#include <iterator>
+#include <vector>
 #include <Windows.h>
 
 using namespace std;

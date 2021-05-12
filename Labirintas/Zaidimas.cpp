@@ -3,9 +3,11 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Zaidejas.h"
 #include "Zemelapiai.h"
 #include "Priesai.h"
+#include "Daiktai.h"
 
 using namespace std;
 
@@ -17,21 +19,31 @@ int main()
 
 	Zaidejas* pZaidejas = new Zaidejas();
 	Zemelapis* pZemalapis = new Zemelapis();
+	Items* pItem = new Items();
 
 	Zaidejas x;
 	Zemelapis z;
+	//Items i;
 
 	cout << "Sveiki atvyke i zaidima - Labirintas!" << endl;
 	cout << "Norint pradeti zaisti iveskite savo varda: " << endl;
-	x.Vardas();
-	system("cls");
+	try
+	{
+		x.Vardas();
+		system("cls");
+	}
+	catch (const char* szMessage)
+	{
+		cout << szMessage << endl;
+		return 0;
+	}
 
 	do
 	{
 		cout << x.get_Vardas() << " iveskite pasirinkima ir spauskite ENTER!" << endl;
 		cout << "	1 - Zaidimo informacija ir taisykles." << endl;
 		cout << "	2 - Pradeti zaidima." << endl;
-		cout << "	3 - Zaidejo informacija." << endl;
+		cout << "	3 - Zaidejo inventorius." << endl;
 		cout << "	4 - Palikti zaidima.\n" << endl;
 
 		cin >> meniu_pasirinkimas;
@@ -41,9 +53,10 @@ int main()
 		{
 		case 1:
 			cout << "Zaidimo informacija: " << endl;
-			cout << "	Zaidimo tikslas - kovoti arba isvengti priesu ir saugiai pereiti labirinta." << endl;
-			cout << "	Zaidimo valdymas - W A S D mygtukai." << endl;
-			cout << "	Norint iseiti spauskite - Q\n" << endl;
+			cout << "	->Zaidimo tikslas - kovoti arba isvengti priesu ir saugiai pereiti labirinta." << endl;
+			cout << "	->Zaidimo valdymas:\n"
+				 << "	   Judeti - W A S D mygtukai.\n	   Inventorius - I\n	   Baigti zaisti - Q" << endl;
+			cout << "	->Norint iseiti spauskite - Q\n" << endl;
 			//papildyti
 			break;
 		case 2:
@@ -52,8 +65,9 @@ int main()
 			{
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
-					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy, x.ar_nukove);
+					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy, x.ar_nukove, x.ar_rado);
 					x.Kova(x.ar_nukove);
+					x.Rasti(x.ar_rado);
 					if(x.gyvybes <= 0) x.ar_iseiti = true;
 
 					cout << "Zaidejo gyvybes " << x.get_Gyvybes() << endl;
@@ -85,10 +99,26 @@ int main()
 						x.ar_iseiti = true;
 						cout << "Baigete zaidima!" << endl;
 					}
-					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q')
+					if (x.judeti == 'I')
 					{
 						system("cls");
-						cout << "Bloga ivedimo komanda! (Judeti - didziosios WASD raides. Baigti zaisti - Q)" << endl;
+						sort(x.kuprine.begin(), x.kuprine.end(), [](inventorius a, inventorius b)
+							{
+								return a.kiekis > b.kiekis;
+							});
+						cout << "Zaidejo inventorius: " << endl;
+						for (int i = 0; i < x.kuprine.size(); i++)
+						{
+							cout << "	" << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+						}
+						cout << endl;
+
+					}
+					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q' && x.judeti != 'I')
+					{
+						system("cls");
+						cout << "Bloga ivedimo komanda!\n"
+							 << "Judeti - didziosios WASD raides.\nInventorius - I\nBaigti zaisti - Q" << endl;
 					}
 					if (x.posx == 4 && x.posy == 19)
 					{
@@ -151,8 +181,17 @@ int main()
 			}
 			break;
 		case 3:
-			cout << "Zaidëjo informacija: " << endl;
-			cout << "	Gyvybes: " << x.get_Gyvybes() << "\n" << endl;
+			sort(x.kuprine.begin(), x.kuprine.end(), [](inventorius a, inventorius b)
+				{
+					return a.kiekis > b.kiekis;
+				});
+
+			cout << "Zaidejo inventorius: " << endl;
+			for (int i = 0; i < x.kuprine.size(); i++)
+			{
+				cout << "	" << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+			}
+			cout << endl;
 			break;
 		case 4:
 			cout << x.get_Vardas() << " Ar tikrai norite palikti zaidima? T/N" << endl;

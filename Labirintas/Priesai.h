@@ -21,7 +21,7 @@ public:
 		goblinas = { 4 };
 		vilkolakis = { 6 };
 	}
-	~Priesas() {};
+	virtual ~Priesas() {};
 public:
 	//virtual void Monstras() = 0;
 	virtual int Damage() = 0;
@@ -32,10 +32,12 @@ public:
 	//void Monstras();
 	int Damage();
 	int goblino_Pinigai();
+	virtual ~Goblinas() {};
 };
 class Vilkolakis : public Priesas
 {
 public:
 	int Damage();
 	int vilkolakio_Eleksyras();
+	virtual ~Vilkolakis() {};
 };

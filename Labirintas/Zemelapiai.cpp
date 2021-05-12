@@ -1,8 +1,4 @@
-#include <iostream>
 #include "Zemelapiai.h"
-#include "Zaidejas.h"
-#include <Windows.h>
-#include "Priesai.h"
 
 using namespace std;
 
@@ -10,14 +6,18 @@ Priesas* pG = new Goblinas();
 Goblinas* pGD = dynamic_cast<Goblinas*>(pG);
 Priesas* pV = new Vilkolakis();
 Vilkolakis* pVD = dynamic_cast<Vilkolakis*>(pV);
+Items i;
 
-void Zemelapis::lengvas_Spausdinti(int& posx, int& posy, int& pposx, int& pposy, bool& ar_nukove)
+void Zemelapis::lengvas_Spausdinti(int& posx, int& posy, int& pposx, int& pposy, bool& ar_nukove, bool& ar_rado)
 {
     lengvas_lygis[pposx][pposy] = tarpas;
     lengvas_lygis[posx][posy] = zaidejas;
     lengvas_lygis[outx][outy] = isejimas;
-    if(ar_nukove == false) lengvas_lygis[pGD->gx][pGD->gy] = pGD->goblinas;
+    if (ar_nukove == false) lengvas_lygis[pGD->gx][pGD->gy] = pGD->goblinas;
     if (ar_nukove == false) lengvas_lygis[pVD->vx][pVD->vy] = pVD->vilkolakis;
+    if (ar_rado == false) lengvas_lygis[i.amx][i.amy] = i.aukso_maisas;
+    if (ar_rado == false) lengvas_lygis[i.gex][i.gey] = i.gyvybiu_eleksyras;
+    if (ar_rado == false) lengvas_lygis[i.eex][i.eey] = i.energijos_eleksyras;
 
     for (int i = 0; i < 10; i++)
     {
