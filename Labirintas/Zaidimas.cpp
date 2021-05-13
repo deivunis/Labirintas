@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <numeric>
 #include "Zaidejas.h"
 #include "Zemelapiai.h"
 #include "Priesai.h"
@@ -14,14 +15,18 @@ using namespace std;
 int main()
 {
 	int meniu_pasirinkimas;
+	int eiles_numeris;
 	char pabaigos_pasirinkimas;
 	char lygio_pasirinkimas = 'N';
+	char inv_pasirinkimas = 'N';
+	int hp_kiekis = 0, pwr_kiekis = 0, money_kiekis = 0;
+	int score;
 
 	Zaidejas* pZaidejas = new Zaidejas();
 	Zemelapis* pZemalapis = new Zemelapis();
 	Items* pItem = new Items();
 
-	Zaidejas x;
+	Zaidejas x, x2;
 	Zemelapis z;
 	//Items i;
 
@@ -29,7 +34,7 @@ int main()
 	cout << "Norint pradeti zaisti iveskite savo varda: " << endl;
 	try
 	{
-		x.Vardas();
+		++x;
 		system("cls");
 	}
 	catch (const char* szMessage)
@@ -66,13 +71,15 @@ int main()
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
 					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy, x.ar_nukove, x.ar_rado);
-					x.Kova(x.ar_nukove);
-					x.Rasti(x.ar_rado);
+					x.Kova(x.ar_nukove, x.posx, x.posy);
+					x.Rasti(x.ar_rado, x.posx, x.posy);
+					score = x + x2;
 					if(x.gyvybes <= 0) x.ar_iseiti = true;
 
-					cout << "Zaidejo gyvybes " << x.get_Gyvybes() << endl;
-					cout << "Zaidejo pinigai " << x.get_Pinigai() << endl;
-					cout << "Zaidejo energija " << x.get_Energija() << endl;
+					cout << "Zaidejo gyvybes " << x.get_Gyvybes() + hp_kiekis << endl;
+					cout << "Zaidejo pinigai " << x.get_Pinigai() + money_kiekis << endl;
+					cout << "Zaidejo energija " << x.get_Energija() + pwr_kiekis << endl;
+					cout << "Zaidejo zingsniai " << score << endl;
 
 					cin >> x.judeti;
 					if (x.judeti == 'W')
@@ -111,8 +118,39 @@ int main()
 						cout << "Zaidejo inventorius: " << endl;
 						for (int i = 0; i < x.kuprine.size(); i++)
 						{
-							cout << "	" << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+							cout << "	" << i+1 << " " << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
 						}
+						cout << "?" << " Ar norite ka nors panaudoti? T/N " << endl;
+						cin >> inv_pasirinkimas;
+						if (inv_pasirinkimas == 'T')
+						{
+							
+							cout << "Iveskite norimo daikto eiles numeri: " << endl;
+							cin >> eiles_numeris;
+							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Gyvybiu eleksyras")
+							{
+								hp_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
+								if (x.get_Gyvybes() + hp_kiekis > 100)
+								{
+									hp_kiekis = hp_kiekis - ((x.get_Gyvybes() + hp_kiekis) - 100);
+								}
+							}
+							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Energijos eleksyras")
+							{
+								pwr_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
+								if (x.get_Energija() + hp_kiekis > 100)
+								{
+									pwr_kiekis = pwr_kiekis - ((x.get_Energija() + pwr_kiekis) - 100);
+								}
+							}
+							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Aukso Maisas")
+							{
+								money_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
+								
+							}
+							x.kuprine.erase(x.kuprine.begin() + (eiles_numeris - 1));
+						}
+
 						cout << endl;
 
 					}
@@ -127,6 +165,10 @@ int main()
 						x.ar_laimejo = true;
 						x.ar_nukove = false;
 						x.ar_rado = false;
+						hp_kiekis = 0;
+						pwr_kiekis = 0;
+						money_kiekis = 0;
+						score = 0;
 						x.levelis = 2;
 						system("cls");
 						cout << "Sveikiname, perejote labirinta!" << endl;
@@ -142,13 +184,16 @@ int main()
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
 					z.vidutinis_Spausdinti(x.posx2, x.posy2, x.pposx2, x.pposy2, x.ar_nukove, x.ar_rado);
-					x.Kova(x.ar_nukove);
-					x.Rasti(x.ar_rado);
+					x.Kova(x.ar_nukove, x.posx2, x.posy2);
+					x.Rasti(x.ar_rado, x.posx2, x.posy2);
+					score = x + x2;
 					if (x.gyvybes <= 0) x.ar_iseiti = true;
 
-					cout << "Zaidejo gyvybes " << x.get_Gyvybes() << endl;
-					cout << "Zaidejo pinigai " << x.get_Pinigai() << endl;
-					cout << "Zaidejo energija " << x.get_Energija() << endl;
+					cout << "Zaidejo gyvybes " << x.get_Gyvybes() + hp_kiekis << endl;
+					cout << "Zaidejo pinigai " << x.get_Pinigai() + money_kiekis << endl;
+					cout << "Zaidejo energija " << x.get_Energija() + pwr_kiekis << endl;
+					cout << "Zaidejo zingsniai " << score << endl;
+				
 
 					cin >> x.judeti;
 					if (x.judeti == 'W')
@@ -187,8 +232,39 @@ int main()
 						cout << "Zaidejo inventorius: " << endl;
 						for (int i = 0; i < x.kuprine.size(); i++)
 						{
-							cout << "	" << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+							cout << "	" << i + 1 << " " << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
 						}
+						cout << "?" << " Ar norite ka nors panaudoti? T/N " << endl;
+						cin >> inv_pasirinkimas;
+						if (inv_pasirinkimas == 'T')
+						{
+
+							cout << "Iveskite norimo daikto eiles numeri: " << endl;
+							cin >> eiles_numeris;
+							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Gyvybiu eleksyras")
+							{
+								hp_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
+								if (x.get_Gyvybes() + hp_kiekis > 100)
+								{
+									hp_kiekis = hp_kiekis - ((x.get_Gyvybes() + hp_kiekis) - 100);
+								}
+							}
+							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Energijos eleksyras")
+							{
+								pwr_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
+								if (x.get_Energija() + hp_kiekis > 100)
+								{
+									pwr_kiekis = pwr_kiekis - ((x.get_Energija() + pwr_kiekis) - 100);
+								}
+							}
+							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Aukso Maisas")
+							{
+								money_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
+
+							}
+							x.kuprine.erase(x.kuprine.begin() + (eiles_numeris - 1));
+						}
+
 						cout << endl;
 
 					}
