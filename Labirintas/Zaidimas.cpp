@@ -9,6 +9,7 @@
 #include "Zemelapiai.h"
 #include "Priesai.h"
 #include "Daiktai.h"
+#include "../include/color.hpp" //spalvos (https://github.com/imfl/color-console)
 
 using namespace std;
 
@@ -29,9 +30,8 @@ int main()
 	Zaidejas x, x2;
 	Zemelapis z;
 	//Items i;
-
-	cout << "Sveiki atvyke i zaidima - Labirintas!" << endl;
-	cout << "Norint pradeti zaisti iveskite savo varda: " << endl;
+	std::cout << "Sveiki atvyke i zaidima -" << dye::aqua(" Labirintas!") << endl;
+	std::cout << "Norint pradeti zaisti iveskite savo" << dye::aqua(" varda: ") << endl;
 	try
 	{
 		++x;
@@ -39,29 +39,32 @@ int main()
 	}
 	catch (const char* szMessage)
 	{
-		cout << szMessage << endl;
+		std::cout << dye::red(szMessage) << endl;
 		return 0;
 	}
 
 	do
 	{
-		cout << x.get_Vardas() << " iveskite pasirinkima ir spauskite ENTER!" << endl;
-		cout << "	1 - Zaidimo informacija ir taisykles." << endl;
-		cout << "	2 - Pradeti zaidima." << endl;
-		cout << "	3 - Zaidejo inventorius." << endl;
-		cout << "	4 - Palikti zaidima.\n" << endl;
+		std::cout << dye::aqua(x.get_Vardas()) << " iveskite pasirinkima ir spauskite" << dye::aqua(" ENTER!") << endl;
+		std::cout << dye::red("	1") << " - Zaidimo informacija ir taisykles." << endl;
+		std::cout << dye::red("	2") << " - Pradeti zaidima." << endl;
+		std::cout << dye::red("	3") << " - Zaidejo inventorius." << endl;
+		std::cout << dye::red("	4") << " - Palikti zaidima.\n" << endl;
 
-		cin >> meniu_pasirinkimas;
+		std::cin >> meniu_pasirinkimas;
 		system("cls");
 
 		switch (meniu_pasirinkimas)
 		{
 		case 1:
-			cout << "Zaidimo informacija: " << endl;
-			cout << "	->Zaidimo tikslas - kovoti arba isvengti priesu ir saugiai pereiti labirinta." << endl;
-			cout << "	->Zaidimo valdymas:\n"
-				 << "	   Judeti - W A S D mygtukai.\n	   Inventorius - I\n	   Baigti zaisti - Q" << endl;
-			cout << endl;
+			std::cout << dye::aqua("Zaidimo informacija: ") << endl;
+			std::cout << dye::red("	->") << dye::aqua("Zaidimo tikslas") << " - kovoti arba isvengti priesu ir saugiai pereiti labirinta." << endl;
+			std::cout << dye::red("	->") << dye::aqua("Zaidimo valdymas") << ":\n"
+				 << "	   Judeti - " << dye::red("W A S D") << " mygtukai.\n"
+				 << "	   Inventorius - " << dye::red("I\n")
+				 << "	   Grizti i meniu - " << dye::red("Q") << endl;
+			std::cout << dye::red("	->") << dye::aqua("Zaidimo lygiai") << " - siuo metu zaidime yra 2 lygiai." << endl;
+			std::cout << endl;
 			//papildyti
 			break;
 		case 2:
@@ -71,17 +74,18 @@ int main()
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
 					z.lengvas_Spausdinti(x.posx, x.posy, x.pposx, x.pposy, x.ar_nukove, x.ar_rado);
-					x.Kova(x.ar_nukove, x.posx, x.posy);
-					x.Rasti(x.ar_rado, x.posx, x.posy);
 					score = x + x2;
 					if(x.gyvybes <= 0) x.ar_iseiti = true;
 
-					cout << "Zaidejo gyvybes " << x.get_Gyvybes() + hp_kiekis << endl;
-					cout << "Zaidejo pinigai " << x.get_Pinigai() + money_kiekis << endl;
-					cout << "Zaidejo energija " << x.get_Energija() + pwr_kiekis << endl;
-					cout << "Zaidejo zingsniai " << score << endl;
+					std::cout << "Zaidejo gyvybes: " << dye::black_on_red(x.get_Gyvybes() + hp_kiekis) << endl;
+					std::cout << "Zaidejo energija: " << dye::black_on_blue(x.get_Energija() + pwr_kiekis) << endl;
+					std::cout << "Zaidejo pinigai: " << dye::black_on_green(x.get_Pinigai() + money_kiekis) << endl;
+					std::cout << "Zaidejo zingsniai: " << dye::black_on_yellow(score) << endl;
+					std::cout << endl;
+					x.Kova(x.ar_nukove, x.posx, x.posy);
+					x.Rasti(x.ar_rado, x.posx, x.posy);
 
-					cin >> x.judeti;
+					std::cin >> x.judeti;
 					if (x.judeti == 'W')
 					{
 						system("cls");
@@ -105,8 +109,9 @@ int main()
 					if (x.judeti == 'Q')
 					{
 						system("cls");
-						x.ar_iseiti = true;
-						cout << "Baigete zaidima!" << endl;
+						//x.ar_iseiti = true;
+						std::cout << dye::green("Grizote i pagrindini meniu!") << endl;
+						break;
 					}
 					if (x.judeti == 'I')
 					{
@@ -115,50 +120,54 @@ int main()
 							{
 								return a.kiekis > b.kiekis;
 							});
-						cout << "Zaidejo inventorius: " << endl;
+						std::cout << "Zaidejo inventorius: " << endl;
 						for (int i = 0; i < x.kuprine.size(); i++)
 						{
-							cout << "	" << i+1 << " " << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+							std::cout << "	" << dye::red(i+1) << " " << dye::aqua(x.kuprine[i].pavadinimas) << " " << x.kuprine[i].kiekis << "% talpos." << endl;
 						}
-						cout << "?" << " Ar norite ka nors panaudoti? T/N " << endl;
-						cin >> inv_pasirinkimas;
+						std::cout << endl;
+						std::cout << dye::red("?") << " Ar norite ka nors panaudoti? " << dye::aqua("T/N ") << endl;
+						std::cin >> inv_pasirinkimas;
 						if (inv_pasirinkimas == 'T')
 						{
 							
-							cout << "Iveskite norimo daikto eiles numeri: " << endl;
-							cin >> eiles_numeris;
+							std::cout << "Iveskite norimo daikto eiles numeri: " << endl;
+							std::cin >> eiles_numeris;
+							system("cls");
 							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Gyvybiu eleksyras")
 							{
 								hp_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
 								if (x.get_Gyvybes() + hp_kiekis > 100)
 								{
 									hp_kiekis = hp_kiekis - ((x.get_Gyvybes() + hp_kiekis) - 100);
+									std::cout << dye::green("Panaudojote: ") << dye::green(x.kuprine[eiles_numeris - 1].pavadinimas) << endl;
 								}
 							}
 							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Energijos eleksyras")
 							{
 								pwr_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
-								if (x.get_Energija() + hp_kiekis > 100)
+								if (x.get_Energija() + pwr_kiekis > 100)
 								{
 									pwr_kiekis = pwr_kiekis - ((x.get_Energija() + pwr_kiekis) - 100);
+									std::cout << dye::green("Panaudojote: ") << dye::green(x.kuprine[eiles_numeris - 1].pavadinimas) << endl;
 								}
 							}
 							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Aukso Maisas")
 							{
 								money_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
-								
+								std::cout << dye::green("Panaudojote: ") << dye::green(x.kuprine[eiles_numeris - 1].pavadinimas) << endl;
 							}
 							x.kuprine.erase(x.kuprine.begin() + (eiles_numeris - 1));
 						}
-
-						cout << endl;
+						//std::cout << endl;
+						//system("cls");
 
 					}
 					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q' && x.judeti != 'I')
 					{
 						system("cls");
-						cout << "Bloga ivedimo komanda!\n"
-							 << "Judeti - didziosios WASD raides.\nInventorius - I\nBaigti zaisti - Q" << endl;
+						std::cout << dye::red("Bloga ivedimo komanda!\n")
+							 << dye::red("  ->Judeti - didziosios WASD raides.\n  ->Inventorius - I\n  ->Grizti i meniu - Q") << endl;
 					}
 					if (x.posx == 4 && x.posy == 19)
 					{
@@ -171,9 +180,9 @@ int main()
 						score = 0;
 						x.levelis = 2;
 						system("cls");
-						cout << "Sveikiname, perejote labirinta!" << endl;
-						cout << "Ar norite pradeti 2 lygi? T/N" << endl;
-						cin >> lygio_pasirinkimas;
+						std::cout << dye::green("Sveikiname, perejote labirinta!") << endl;
+						std::cout << dye::green("Ar norite pradeti 2 lygi? T/N") << endl;
+						std::cin >> lygio_pasirinkimas;
 						system("cls");
 					}
 				}
@@ -184,18 +193,19 @@ int main()
 				while (x.ar_laimejo == false && x.ar_iseiti == false)
 				{
 					z.vidutinis_Spausdinti(x.posx2, x.posy2, x.pposx2, x.pposy2, x.ar_nukove, x.ar_rado);
-					x.Kova(x.ar_nukove, x.posx2, x.posy2);
-					x.Rasti(x.ar_rado, x.posx2, x.posy2);
 					score = x + x2;
 					if (x.gyvybes <= 0) x.ar_iseiti = true;
 
-					cout << "Zaidejo gyvybes " << x.get_Gyvybes() + hp_kiekis << endl;
-					cout << "Zaidejo pinigai " << x.get_Pinigai() + money_kiekis << endl;
-					cout << "Zaidejo energija " << x.get_Energija() + pwr_kiekis << endl;
-					cout << "Zaidejo zingsniai " << score << endl;
-				
+					std::cout << "Zaidejo gyvybes: " << dye::black_on_red(x.get_Gyvybes() + hp_kiekis) << endl;
+					std::cout << "Zaidejo energija: " << dye::black_on_blue(x.get_Energija() + pwr_kiekis) << endl;
+					std::cout << "Zaidejo pinigai: " << dye::black_on_green(x.get_Pinigai() + money_kiekis) << endl;
+					std::cout << "Zaidejo zingsniai: " << dye::black_on_yellow(score) << endl;
+					std::cout << endl;
 
-					cin >> x.judeti;
+					x.Kova(x.ar_nukove, x.posx2, x.posy2);
+					x.Rasti(x.ar_rado, x.posx2, x.posy2);
+
+					std::cin >> x.judeti;
 					if (x.judeti == 'W')
 					{
 						system("cls");
@@ -219,8 +229,9 @@ int main()
 					if (x.judeti == 'Q')
 					{
 						system("cls");
-						x.ar_iseiti = true;
-						cout << "Baigete zaidima!" << endl;
+						//x.ar_iseiti = true;
+						std::cout << dye::green("Grizote i pagrindini meniu!") << endl;
+						break;
 					}
 					if (x.judeti == 'I')
 					{
@@ -229,57 +240,61 @@ int main()
 							{
 								return a.kiekis > b.kiekis;
 							});
-						cout << "Zaidejo inventorius: " << endl;
+						std::cout << "Zaidejo inventorius: " << endl;
 						for (int i = 0; i < x.kuprine.size(); i++)
 						{
-							cout << "	" << i + 1 << " " << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+							std::cout << "	" << dye::red(i + 1) << " " << dye::aqua(x.kuprine[i].pavadinimas) << " " << x.kuprine[i].kiekis << "% talpos." << endl;
 						}
-						cout << "?" << " Ar norite ka nors panaudoti? T/N " << endl;
-						cin >> inv_pasirinkimas;
+						std::cout << endl;
+						std::cout << dye::red("?") << " Ar norite ka nors panaudoti? " << dye::aqua("T/N ") << endl;
+						std::cin >> inv_pasirinkimas;
 						if (inv_pasirinkimas == 'T')
 						{
 
-							cout << "Iveskite norimo daikto eiles numeri: " << endl;
-							cin >> eiles_numeris;
+							std::cout << "Iveskite norimo daikto eiles numeri: " << endl;
+							std::cin >> eiles_numeris;
+							system("cls");
 							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Gyvybiu eleksyras")
 							{
 								hp_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
 								if (x.get_Gyvybes() + hp_kiekis > 100)
 								{
 									hp_kiekis = hp_kiekis - ((x.get_Gyvybes() + hp_kiekis) - 100);
+									std::cout << dye::green("Panaudojote: ") << dye::green(x.kuprine[eiles_numeris - 1].pavadinimas) << endl;
 								}
 							}
 							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Energijos eleksyras")
 							{
 								pwr_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
-								if (x.get_Energija() + hp_kiekis > 100)
+								if (x.get_Energija() + pwr_kiekis > 100)
 								{
 									pwr_kiekis = pwr_kiekis - ((x.get_Energija() + pwr_kiekis) - 100);
+									std::cout << dye::green("Panaudojote: ") << dye::green(x.kuprine[eiles_numeris - 1].pavadinimas) << endl;
 								}
 							}
 							if (x.kuprine[eiles_numeris - 1].pavadinimas == "Aukso Maisas")
 							{
 								money_kiekis = x.kuprine[eiles_numeris - 1].kiekis;
-
+								std::cout << dye::green("Panaudojote: ") << dye::green(x.kuprine[eiles_numeris - 1].pavadinimas) << endl;
 							}
 							x.kuprine.erase(x.kuprine.begin() + (eiles_numeris - 1));
 						}
-
-						cout << endl;
+						//std::cout << endl;
+						//system("cls");
 
 					}
 					if (x.judeti != 'W' && x.judeti != 'S' && x.judeti != 'A' && x.judeti != 'D' && x.judeti != 'Q' && x.judeti != 'I')
 					{
 						system("cls");
-						cout << "Bloga ivedimo komanda!\n"
-							<< "Judeti - didziosios WASD raides.\nInventorius - I\nBaigti zaisti - Q" << endl;
+						std::cout << dye::red("Bloga ivedimo komanda!\n")
+							<< dye::red("  ->Judeti - didziosios WASD raides.\n  ->Inventorius - I\n  ->Grizti i meniu - Q") << endl;
 					}
 					if (x.posx2 == 29 && x.posy2 == 30)
 					{
 						x.ar_laimejo = true;
 						x.levelis = 3;
 						system("cls");
-						cout << "Sveikiname, perejote labirinta!" << endl;
+						std::cout << dye::green("Sveikiname, perejote labirinta!") << endl;
 					}
 				}
 			}
@@ -290,32 +305,40 @@ int main()
 					return a.kiekis > b.kiekis;
 				});
 
-			cout << "Zaidejo inventorius: " << endl;
+			std::cout << "Zaidejo inventorius: " << endl;
 			for (int i = 0; i < x.kuprine.size(); i++)
 			{
-				cout << "	" << x.kuprine[i].pavadinimas << " " << x.kuprine[i].kiekis << "% talpos." << endl;
+				std::cout << "	" << dye::red(i + 1) << " " << dye::aqua(x.kuprine[i].pavadinimas) << " " << x.kuprine[i].kiekis << "% talpos." << endl;
 			}
-			cout << endl;
+			std::cout << endl;
 			break;
 		case 4:
-			cout << x.get_Vardas() << " Ar tikrai norite palikti zaidima? T/N" << endl;
-			cin >> pabaigos_pasirinkimas;
+			std::cout << dye::aqua(x.get_Vardas()) << ", ar tikrai norite palikti zaidima? T/N" << endl;
+			std::cin >> pabaigos_pasirinkimas;
+			//system("cls");
 			if (pabaigos_pasirinkimas == 'T')
 			{
-				cout << "Iki pasimatymo " << x.get_Vardas() << "!" << endl;
-				meniu_pasirinkimas = 5;
+				std::cout << "Iki pasimatymo, " << dye::aqua(x.get_Vardas()) << "!" << endl;
+				meniu_pasirinkimas = 96784315; // toks skaicius, kad zaidejas netycia nepataikytu ant uzdarymo skaiciaus
 			}
 			else
 			{
 				break;
 			}
-		/*default:
-			cout << "Neteisingai ivestas pasirinkimas!" << endl;
-			cout << "Iveskite skaiciu (1-4) is naujo!" << endl;
-			break;*/
+		default:
+			if (meniu_pasirinkimas != 96784315)
+			{
+				std::cout << dye::red("Neteisingai ivestas pasirinkimas!") << endl;
+				std::cout << dye::red("Iveskite skaiciu (1-4) is naujo!") << endl;
+				std::cout << endl;
+				break;
+			}
 		}
 
-	} while (meniu_pasirinkimas != 5);
+	} while (meniu_pasirinkimas != 96784315);
+
+	delete pZaidejas;
+	delete pZemalapis;
 
 	return 0;
 }

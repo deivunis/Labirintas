@@ -24,7 +24,7 @@ public:
 	Zaidejas()
 	{
 		gyvybes = 100;
-		energija = 100;
+		energija = 1;
 		dmg = 0;
 		pinigai = 0;
 		ar_nukove = false;

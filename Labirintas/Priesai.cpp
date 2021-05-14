@@ -47,7 +47,7 @@ int Vilkolakis::vilkolakio_Eleksyras()
 int Skeletonas::Damage()
 {
 	srand((unsigned)time(0));
-	int dmg = 1 + (rand() % 25);
+	int dmg = 1 + (rand() % 30);
 	return dmg;
 }
 int Skeletonas::Exhaustion()

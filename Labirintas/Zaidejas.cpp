@@ -14,6 +14,8 @@ Priesas* pS2 = new Skeletonas();
 Skeletonas* pSD2 = dynamic_cast<Skeletonas*>(pS2);
 Items i2;
 
+HANDLE spalva = GetStdHandle(STD_OUTPUT_HANDLE);
+
 void Zaidejas::operator++()
 {
     string slap;
@@ -46,7 +48,12 @@ void Zaidejas::virsu(int& posx, int& posy)
             posx--;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
     if (levelis == 2)
     {
@@ -57,7 +64,12 @@ void Zaidejas::virsu(int& posx, int& posy)
             posx--;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
 }
 
@@ -72,7 +84,12 @@ void Zaidejas::apacia(int& posx, int& posy)
             posx++;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
     if (levelis == 2)
     {
@@ -83,7 +100,12 @@ void Zaidejas::apacia(int& posx, int& posy)
             posx++;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
 }
 
@@ -98,7 +120,12 @@ void Zaidejas::kaire(int& posx, int& posy)
             posy--;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
     if (levelis == 2)
     {
@@ -109,7 +136,12 @@ void Zaidejas::kaire(int& posx, int& posy)
             posy--;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
 }
 
@@ -124,7 +156,12 @@ void Zaidejas::desine(int& posx, int& posy)
             posy++;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
     if (levelis == 2)
     {
@@ -135,7 +172,12 @@ void Zaidejas::desine(int& posx, int& posy)
             posy++;
             zingsniai++;
         }
-        else cout << "Atsitrenkei i siena!" << endl;
+        else
+        {
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "Atsitrenkei i siena!" << endl;
+            SetConsoleTextAttribute(spalva, 7);
+        }
     }
 }
 
@@ -149,11 +191,15 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
             gyvybes = gyvybes - pGD2->Damage();
             energija = energija - pGD2->Exhaustion();
             pinigai = pinigai + pGD2->goblino_Pinigai();
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===================================" << endl;
             cout << "Uzklupai goblina ir nugalejai!" << endl;
             cout << "Kovodamas praradai:\n"
-                << pGD2->Damage() << " gyvybiu\n"
-                << pGD2->Exhaustion() << " energijos.\nTaciau radai "
-                << pGD2->goblino_Pinigai() << " monetu pas goblina!" << endl;
+                 << pGD2->Damage() << " gyvybiu\n"
+                 << pGD2->Exhaustion() << " energijos.\nTaciau radai "
+                 << pGD2->goblino_Pinigai() << " monetu pas goblina!" << endl;
+            cout << "===================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
 
             pG2->gx = 0;
             pG2->gy = 0;
@@ -162,27 +208,41 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
         else if (pG2->gx == posx && pG2->gy == posy && gyvybes <= pGD2->Damage())
         {
             gyvybes = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "=========================================" << endl;
             cout << "Uzklupai goblina, taciau jis tave iveike!" << endl;
+            cout << "=========================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         else if (pG2->gx == posx && pG2->gy == posy && energija <= pGD2->Exhaustion() && gyvybes > pGD2->Damage())
         {
             energija = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "============================================================================" << endl;
             cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+            cout << "============================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             Sleep(30000);
             energija = 30;
-            cout << "Pailsejai" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "==========" << endl;
+            cout << "Pailsejai!" << endl;
+            cout << "==========" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
-        if (pV2->vx == posx && pV2->vy == posy && gyvybes > pVD2->Damage())
+        if (pV2->vx == posx && pV2->vy == posy && gyvybes > pVD2->Damage() && energija > pVD2->Exhaustion())
         {
             gyvybes = gyvybes - pVD2->Damage();
             energija = energija - pVD2->Exhaustion();
-            cout << "Uzklupai vilkolaki ir nugalejai! " << endl;
-            cout << "Kovodamas praradai:\n"
-                << pVD2->Damage() << " gyvybiu\n"
-                << pVD2->Exhaustion() << " energijos.\nTaciau radai gyvybiu eleksyra, kuris atstate "
-                << pVD2->vilkolakio_Eleksyras() << " tavo gyvybiu!" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===============================================================" << endl;
+            cout << "Uzklupai vilkolaki ir nugalejai!" << endl;
+            cout << "Kovodamas praradai:\n" << pVD2->Damage() << " gyvybiu\n" << pVD2->Exhaustion() << " energijos.\n"
+                 << "Taciau radai gyvybiu eleksyra, kuris atstate " << pVD2->vilkolakio_Eleksyras() << " tavo gyvybiu!" << endl;
+            cout << "===============================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             gyvybes = gyvybes + pVD2->vilkolakio_Eleksyras();
             pV2->vx = 0;
             pV2->vy = 0;
@@ -191,27 +251,43 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
         else if (pV2->vx == posx && pV2->vy == posy && gyvybes <= pVD2->Damage())
         {
             gyvybes = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "===========================================" << endl;
             cout << "Uzklupai vilkolaki, taciau jis tave iveike!" << endl;
+            cout << "===========================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         else if (pV2->vx == posx && pV2->vy == posy && energija <= pVD2->Exhaustion() && gyvybes > pVD2->Damage())
         {
             energija = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "============================================================================" << endl;
             cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+            cout << "============================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             Sleep(30000);
             energija = 30;
-            cout << "Pailsejai" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "==========" << endl;
+            cout << "Pailsejai!" << endl;
+            cout << "==========" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
-        if (pS2->sx == posx && pS2->sy == posy && gyvybes > pSD2->Damage())
+        if (pS2->sx == posx && pS2->sy == posy && gyvybes > pSD2->Damage() && energija > pSD2->Exhaustion())
         {
             gyvybes = gyvybes - pSD2->Damage();
             energija = energija - pSD2->Exhaustion();
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "=================================================================" << endl;
             cout << "Uzklupai skeletona ir nugalejai! " << endl;
             cout << "Kovodamas praradai:\n"
                 << pSD2->Damage() << " gyvybiu\n"
                 << pSD2->Exhaustion() << " energijos.\nTaciau radai energijos eleksyra, kuris atstate "
                 << pSD2->skeletono_Eleksyras() << " tavo energijos!" << endl;
+            cout << "=================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             energija = energija + pSD2->skeletono_Eleksyras();
             pS2->sx = 0;
             pS2->sy = 0;
@@ -220,16 +296,28 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
         else if (pS2->sx == posx && pS2->sy == posy && gyvybes <= pSD2->Damage())
         {
             gyvybes = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "===========================================" << endl;
             cout << "Uzklupai skeletona, taciau jis tave iveike!" << endl;
+            cout << "===========================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         else if (pS2->sx == posx && pS2->sy == posy && energija <= pSD2->Exhaustion() && gyvybes > pSD2->Damage())
         {
             energija = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "============================================================================" << endl;
             cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+            cout << "============================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             Sleep(30000);
             energija = 30;
-            cout << "Pailsejai" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "==========" << endl;
+            cout << "Pailsejai!" << endl;
+            cout << "==========" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
     }
@@ -240,11 +328,15 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
             gyvybes = gyvybes - pGD2->Damage();
             energija = energija - pGD2->Exhaustion();
             pinigai = pinigai + pGD2->goblino_Pinigai();
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===================================" << endl;
             cout << "Uzklupai goblina ir nugalejai!" << endl;
             cout << "Kovodamas praradai:\n"
-                << pGD2->Damage() << " gyvybiu\n"
-                << pGD2->Exhaustion() << " energijos.\nTaciau radai "
-                << pGD2->goblino_Pinigai() << " monetu pas goblina!" << endl;
+                 << pGD2->Damage() << " gyvybiu\n"
+                 << pGD2->Exhaustion() << " energijos.\nTaciau radai "
+                 << pGD2->goblino_Pinigai() << " monetu pas goblina!" << endl;
+            cout << "===================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
 
             pG2->gx2 = 0;
             pG2->gy2 = 0;
@@ -253,27 +345,41 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
         else if (pG2->gx2 == posx && pG2->gy2 == posy && gyvybes <= pGD2->Damage())
         {
             gyvybes = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "=========================================" << endl;
             cout << "Uzklupai goblina, taciau jis tave iveike!" << endl;
+            cout << "=========================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         else if (pG2->gx2 == posx && pG2->gy2 == posy && energija <= pGD2->Exhaustion() && gyvybes > pGD2->Damage())
         {
             energija = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "============================================================================" << endl;
             cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+            cout << "============================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             Sleep(30000);
             energija = 30;
-            cout << "Pailsejai" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "==========" << endl;
+            cout << "Pailsejai!" << endl;
+            cout << "==========" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         if (pV2->vx2 == posx && pV2->vy2 == posy && gyvybes > pVD2->Damage())
         {
             gyvybes = gyvybes - pVD2->Damage();
             energija = energija - pVD2->Exhaustion();
-            cout << "Uzklupai vilkolaki ir nugalejai! " << endl;
-            cout << "Kovodamas praradai:\n"
-                << pVD2->Damage() << " gyvybiu\n"
-                << pVD2->Exhaustion() << " energijos.\nTaciau radai gyvybiu eleksyra, kuris atstate "
-                << pVD2->vilkolakio_Eleksyras() << " tavo gyvybiu!" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===============================================================" << endl;
+            cout << "Uzklupai vilkolaki ir nugalejai!" << endl;
+            cout << "Kovodamas praradai:\n" << pVD2->Damage() << " gyvybiu\n" << pVD2->Exhaustion() << " energijos.\n"
+                 << "Taciau radai gyvybiu eleksyra, kuris atstate " << pVD2->vilkolakio_Eleksyras() << " tavo gyvybiu!" << endl;
+            cout << "===============================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             gyvybes = gyvybes + pVD2->vilkolakio_Eleksyras();
             pV2->vx2 = 0;
             pV2->vy2 = 0;
@@ -282,27 +388,43 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
         else if (pV2->vx2 == posx && pV2->vy2 == posy && gyvybes <= pVD2->Damage())
         {
             gyvybes = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "===========================================" << endl;
             cout << "Uzklupai vilkolaki, taciau jis tave iveike!" << endl;
+            cout << "===========================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         else if (pV2->vx2 == posx && pV2->vy2 == posy && energija <= pVD2->Exhaustion() && gyvybes > pVD2->Damage())
         {
             energija = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "============================================================================" << endl;
             cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+            cout << "============================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             Sleep(30000);
             energija = 30;
-            cout << "Pailsejai" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "==========" << endl;
+            cout << "Pailsejai!" << endl;
+            cout << "==========" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         if (pS2->sx2 == posx && pS2->sy2 == posy && gyvybes > pSD2->Damage())
         {
             gyvybes = gyvybes - pSD2->Damage();
             energija = energija - pSD2->Exhaustion();
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "=================================================================" << endl;
             cout << "Uzklupai skeletona ir nugalejai! " << endl;
             cout << "Kovodamas praradai:\n"
-                << pSD2->Damage() << " gyvybiu\n"
-                << pSD2->Exhaustion() << " energijos.\nTaciau radai energijos eleksyra, kuris atstate "
-                << pSD2->skeletono_Eleksyras() << " tavo energijos!" << endl;
+                 << pSD2->Damage() << " gyvybiu\n"
+                 << pSD2->Exhaustion() << " energijos.\nTaciau radai energijos eleksyra, kuris atstate "
+                 << pSD2->skeletono_Eleksyras() << " tavo energijos!" << endl;
+            cout << "=================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             energija = energija + pSD2->skeletono_Eleksyras();
             pS2->sx2 = 0;
             pS2->sy2 = 0;
@@ -311,16 +433,28 @@ void Zaidejas::Kova(bool& ar_nukove, int& posx, int& posy)
         else if (pS2->sx2 == posx && pS2->sy2 == posy && gyvybes <= pSD2->Damage())
         {
             gyvybes = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "===========================================" << endl;
             cout << "Uzklupai skeletona, taciau jis tave iveike!" << endl;
+            cout << "===========================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
         else if (pS2->sx2 == posx && pS2->sy2 == posy && energija <= pSD2->Exhaustion() && gyvybes > pSD2->Damage())
         {
             energija = 0;
+            SetConsoleTextAttribute(spalva, 4);
+            cout << "============================================================================" << endl;
             cout << "Kovodamas issekai, todel 30 sekundziu negali judeti, kol siek tiek pailsesi!" << endl;
+            cout << "============================================================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             Sleep(30000);
             energija = 30;
-            cout << "Pailsejai" << endl;
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "==========" << endl;
+            cout << "Pailsejai!" << endl;
+            cout << "==========" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             ar_nukove = false;
         }
     }
@@ -331,7 +465,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
     {
         if (i2.amx == posx && i2.amy == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===============================" << endl;
             cout << "Sveikiname, radai aukso maisa! " << endl;
+            cout << "===============================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Maisas(), i2.Random() });
             i2.amx = 0;
             i2.amy = 0;
@@ -339,7 +477,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.gex == posx && i2.gey == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "====================================" << endl;
             cout << "Sveikiname, radai gyvybiu eleksyra! " << endl;
+            cout << "====================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Hp(), i2.Random() });
             i2.gex = 0;
             i2.gey = 0;
@@ -347,7 +489,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.eex == posx && i2.eey == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "======================================" << endl;
             cout << "Sveikiname, radai energijos eleksyra! " << endl;
+            cout << "======================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Energy(), i2.Random() });
             i2.eex = 0;
             i2.eey = 0;
@@ -358,7 +504,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
     {
         if (i2.amx2 == posx && i2.amy2 == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===============================" << endl;
             cout << "Sveikiname, radai aukso maisa! " << endl;
+            cout << "===============================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Maisas(), i2.Random() });
             i2.amx2 = 0;
             i2.amy2 = 0;
@@ -366,7 +516,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.amx3 == posx && i2.amy3 == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "===============================" << endl;
             cout << "Sveikiname, radai aukso maisa! " << endl;
+            cout << "===============================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Maisas(), i2.Random() });
             i2.amx3 = 0;
             i2.amy3 = 0;
@@ -374,7 +528,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.gex2 == posx && i2.gey2 == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "====================================" << endl;
             cout << "Sveikiname, radai gyvybiu eleksyra! " << endl;
+            cout << "====================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Hp(), i2.Random() });
             i2.gex2 = 0;
             i2.gey2 = 0;
@@ -382,7 +540,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.gex3 == posx && i2.gey3 == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "====================================" << endl;
             cout << "Sveikiname, radai gyvybiu eleksyra! " << endl;
+            cout << "====================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Hp(), i2.Random() });
             i2.gex3 = 0;
             i2.gey3 = 0;
@@ -390,7 +552,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.eex2 == posx && i2.eey2 == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "======================================" << endl;
             cout << "Sveikiname, radai energijos eleksyra! " << endl;
+            cout << "======================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Energy(), i2.Random() });
             i2.eex2 = 0;
             i2.eey2 = 0;
@@ -398,7 +564,11 @@ void Zaidejas::Rasti(bool& ar_rado, int& posx, int& posy)
         }
         if (i2.eex3 == posx && i2.eey3 == posy)
         {
+            SetConsoleTextAttribute(spalva, 2);
+            cout << "======================================" << endl;
             cout << "Sveikiname, radai energijos eleksyra! " << endl;
+            cout << "======================================" << endl;
+            SetConsoleTextAttribute(spalva, 7);
             kuprine.push_back({ i2.Energy(), i2.Random() });
             i2.eex3 = 0;
             i2.eey3 = 0;
